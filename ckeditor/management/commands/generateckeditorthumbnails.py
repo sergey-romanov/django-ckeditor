@@ -17,22 +17,12 @@ class Command(NoArgsCommand):
         if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
             backend = get_backend()
             for image in get_image_files():
-                if not self._thumbnail_exists(image):
-                    self.stdout.write("Creating thumbnail for %s" % image)
+                if not os.path.isfile(get_thumb_filename(image)):
+                    self.stdout.write("Creating thumbnail for {0}".format(image))
                     try:
                         backend.create_thumbnail(image)
                     except Exception as e:
-                        self.stdout.write("Couldn't create thumbnail for %s: %s" % (image, e))
+                        self.stdout.write("Couldn't create thumbnail for {0}: {1}".format(image, e))
             self.stdout.write("Finished")
         else:
             self.stdout.write("No thumbnail backend is enabled")
-
-    def _thumbnail_exists(self, image_path):
-        thumb_path = self._to_absolute_path(
-            get_thumb_filename(image_path)
-        )
-        return os.path.isfile(thumb_path)
-
-    @staticmethod
-    def _to_absolute_path(image_path):
-        return os.path.join(settings.MEDIA_ROOT, image_path)

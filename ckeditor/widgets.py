@@ -8,19 +8,10 @@ from django.utils.encoding import force_text
 from django.utils.translation import get_language
 from django.core.exceptions import ImproperlyConfigured
 from django.forms.util import flatatt
-
-from django.utils.functional import Promise
-from django.utils.encoding import force_text
-from django.core.serializers.json import DjangoJSONEncoder
-
-class LazyEncoder(DjangoJSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, Promise):
-            return force_text(obj)
-        return super(LazyEncoder, self).default(obj)
+import json
 
 
-json_encode = LazyEncoder().encode
+json_encode = json.JSONEncoder().encode
 
 DEFAULT_CONFIG = {
     'skin': 'moono',
@@ -29,7 +20,6 @@ DEFAULT_CONFIG = {
     ],
     'toolbar_Full': [
         ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
-        [ 'Link','Unlink','Anchor'],
         ['Image', 'Flash', 'Table', 'HorizontalRule'],
         ['TextColor', 'BGColor'],
         ['Smiley', 'SpecialChar'], ['Source'],

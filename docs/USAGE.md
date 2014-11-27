@@ -66,29 +66,6 @@ So included this on your settings.py.::
         }
     }
 
-
-## Demo / Test application
-
-If you clone the repository you will be able to run the ``ckeditor_demo`` application.
-
-1. ``pip install -r ckeditor_demo_requirements.txt``
-
-2. Run ``python.manage.py syncdb``
-
-3. Create a superuser if you want to test the widget in the admin panel
-
-4. Start the development server.
-
-There is a forms.Form on main page (/) and a model in admin that uses the widget for a model field.
-Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directory.
-
-
-### Running selenium test
-
-You can run the test with ``python manage.py test ckeditor_demo`` (for repo checkout only) or with ``tox`` which is configured to run with Python 2.7 and 3.3.
-(You may have to fix some imports in selenium webdriver for Python 3.3).
-
-
 ## Versioning
 
 First two numbers resemble ckeditor version used in the package. The third is used to issue releases for given ckeditor bundle (fixes, new features)

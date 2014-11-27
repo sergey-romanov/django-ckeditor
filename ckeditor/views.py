@@ -4,7 +4,6 @@ import os
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.views.decorators.csrf import csrf_exempt
-from django.views import generic
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -33,43 +32,42 @@ def get_upload_filename(upload_name, user):
     return default_storage.get_available_name(os.path.join(upload_path, upload_name))
 
 
-class ImageUploadView(generic.View):
-    http_method_names = ['post']
+@csrf_exempt
+def upload(request):
+    """
+    Uploads a file and send back its URL to CKEditor.
 
-    def post(self, request, **kwargs):
-        """
-        Uploads a file and send back its URL to CKEditor.
-        """
-        # Get the uploaded file from request.
-        upload = request.FILES['upload']
+    TODO:
+        Validate uploads
+    """
+    # Get the uploaded file from request.
+    upload = request.FILES['upload']
 
-        #Verify that file is a valid image
-        backend = image_processing.get_backend()
-        try:
-            backend.image_verify(upload)
-        except utils.NotAnImageException:
-            return HttpResponse("""
-                       <script type='text/javascript'>
-                            alert('Invalid image')
-                            window.parent.CKEDITOR.tools.callFunction({0});
-                       </script>""".format(request.GET['CKEditorFuncNum']))
-
-        # Open output file in which to store upload.
-        upload_filename = get_upload_filename(upload.name, request.user)
-        saved_path = default_storage.save(upload_filename, upload)
-
-        if backend.should_create_thumbnail(saved_path):
-            backend.create_thumbnail(saved_path)
-
-        url = utils.get_media_url(saved_path)
-
-        # Respond with Javascript sending ckeditor upload url.
+    #Verify that file is a valid image
+    backend = image_processing.get_backend()
+    try:
+        backend.image_verify(upload)
+    except utils.NotAnImageException:
         return HttpResponse("""
-        <script type='text/javascript'>
-            window.parent.CKEDITOR.tools.callFunction({0}, '{1}');
-        </script>""".format(request.GET['CKEditorFuncNum'], url))
+                   <script type='text/javascript'>
+                        alert('Invalid image')
+                        window.parent.CKEDITOR.tools.callFunction({0});
+                   </script>""".format(request.GET['CKEditorFuncNum']))
 
-upload = csrf_exempt(ImageUploadView.as_view())
+    # Open output file in which to store upload.
+    upload_filename = get_upload_filename(upload.name, request.user)
+    saved_path = default_storage.save(upload_filename, upload)
+
+    if backend.should_create_thumbnail(saved_path):
+        backend.create_thumbnail(saved_path)
+
+    url = utils.get_media_url(saved_path)
+
+    # Respond with Javascript sending ckeditor upload url.
+    return HttpResponse("""
+    <script type='text/javascript'>
+        window.parent.CKEDITOR.tools.callFunction({0}, '{1}');
+    </script>""".format(request.GET['CKEditorFuncNum'], url))
 
 
 def get_image_files(user=None, path=''):
@@ -98,14 +96,12 @@ def get_image_files(user=None, path=''):
         return
 
     for filename in storage_list[STORAGE_FILES]:
-        if os.path.splitext(filename)[0].endswith('_thumb') or os.path.basename(filename).startswith('.'):
+        if os.path.splitext(filename)[0].endswith('_thumb'):
             continue
         filename = os.path.join(browse_path, filename)
         yield filename
 
     for directory in storage_list[STORAGE_DIRECTORIES]:
-        if directory.startswith('.'):
-            continue
         directory_path = os.path.join(path, directory)
         for element in get_image_files(user=user, path=directory_path):
             yield element
