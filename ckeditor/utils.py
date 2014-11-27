@@ -4,10 +4,14 @@ import random
 import string
 
 from django.core.files.storage import default_storage
-from django.template.defaultfilters import slugify
+from pytils.translit import slugify
 
 
 class NotAnImageException(Exception):
+    pass
+
+
+class NotAnPermittedFileTypeException(Exception):
     pass
 
 

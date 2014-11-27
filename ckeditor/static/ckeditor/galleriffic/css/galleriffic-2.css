@@ -95,7 +95,7 @@ div.navigation {
 ul.thumbs {
 	clear: both;
 	margin: 0;
-	padding: 0;
+	padding: 8px 0 0;
 }
 ul.thumbs li {
 	float: left;
@@ -109,7 +109,7 @@ a.thumb {
 	border: 1px solid #ccc;
 }
 ul.thumbs li.selected a.thumb {
-	background: #000;
+	border-color: #777;
 }
 a.thumb:focus {
 	outline: none;
@@ -141,11 +141,12 @@ div.pagination a:hover {
 }
 div.pagination span.current {
 	font-weight: bold;
-	background-color: #000;
-	border-color: #000;
-	color: #fff;
+	background-color: #eee;
+	border-color: #ddd;
+	color: #777;
 }
 div.pagination span.ellipsis {
 	border: none;
 	padding: 5px 0 3px 2px;
 }
+

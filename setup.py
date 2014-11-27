@@ -18,6 +18,7 @@ setup(
     packages=find_packages(exclude=["*.demo"]),
     install_requires=[
         'Django',
+        'pytils',
     ],
     include_package_data=True,
     classifiers=[

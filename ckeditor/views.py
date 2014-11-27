@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from ckeditor import image_processing
+from ckeditor import image_processing, file_processing
 from ckeditor import utils
 
 
@@ -48,9 +48,18 @@ def upload(request):
     try:
         backend.image_verify(upload)
     except utils.NotAnImageException:
-        return HttpResponse("""
+        is_not_image = True
+    else:
+        is_not_image = False
+
+    if is_not_image:
+        backend = file_processing.get_backend()
+        try:
+            backend.file_verify(upload)
+        except utils.NotAnPermittedFileTypeException:
+            return HttpResponse("""
                    <script type='text/javascript'>
-                        alert('Invalid image')
+                        alert('Invalid file type or invalid image')
                         window.parent.CKEDITOR.tools.callFunction({0});
                    </script>""".format(request.GET['CKEditorFuncNum']))
 
@@ -119,10 +128,29 @@ def get_files_browse_urls(user=None):
             thumb = utils.get_media_url(utils.get_thumb_filename(filename))
         else:
             thumb = src
+        ext = filename.split('.')[-1].lower()
+        fa_icon = 'file'
+        if ext == 'xls' or ext == 'xls':
+            fa_icon = 'excel'
+        elif ext == 'doc' or ext == 'docx':
+            fa_icon = 'word'
+        elif ext == 'ppt' or ext == 'pptx':
+            fa_icon = 'powerpoint'
+        elif ext == 'rar' or ext == 'zip':
+            fa_icon = 'archive'
+        elif ext == 'pdf':
+            fa_icon = 'pdf'
+        elif ext == 'swf':
+            fa_icon = 'video'
+        else:
+            fa_icon = 'image'
         files.append({
             'thumb': thumb,
             'src': src,
-            'is_image': is_image(src)
+            'is_image': is_image(src),
+            'filename': filename.split('/')[-1].split('.')[0].lower(),
+            'ext': ext,
+            'icon': fa_icon,
         })
 
     return files
