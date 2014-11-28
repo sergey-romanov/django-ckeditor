@@ -19,16 +19,24 @@ DEFAULT_CONFIG = {
         ['Source', '-', 'Bold', 'Italic']
     ],
     'toolbar_Full': [
-        ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
-        ['Image', 'Flash', 'Table', 'HorizontalRule'],
+        ['NewPage', 'Preview', 'Print'],
+        ['Cut', 'Copy', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+        ['Find', 'Replace'],
+        ['ShowBlocks', 'Source', 'Maximize'],
+        '/',
+        ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
+        ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+        '/',
+        ['Format', 'Styles'],
         ['TextColor', 'BGColor'],
-        ['Smiley', 'SpecialChar'], ['Source'],
+        ['Link', 'Unlink', 'Anchor'],
+        ['Image', 'Flash',  'Table', 'HorizontalRule', 'SpecialChar', 'Iframe', 'File', 'FileButton'],
     ],
     'toolbar': 'Full',
-    'height': 291,
-    'width': 835,
-    'filebrowserWindowWidth': 940,
-    'filebrowserWindowHeight': 725,
+    'width': 1140,
+    'height': 600,
+    'filebrowserWindowWidth': 920,
+    'filebrowserWindowHeight': 640,
 }
 
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-28 02:32+0400\n"
-"PO-Revision-Date: 2014-11-28 01:41+0300\n"
+"POT-Creation-Date: 2014-11-28 11:25+0400\n"
+"PO-Revision-Date: 2014-11-28 10:28+0300\n"
 "Last-Translator: 1 <1>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,6 +21,13 @@ msgstr ""
 #: templates/browse.html:5
 msgid "Select an file to embed"
 msgstr "Отметьте нужный файл слева и нажмите кнопку Выбрать файл"
+
+#: templates/browse.html:22
+msgid ""
+"No files found. Upload file using the 'File Button' dialog's 'Upload' tab"
+msgstr ""
+"Не надено ни одного файла. Для загрузки файлов используйте кнопку «Загрузить "
+"на сервер» на закладке «Загрузить» в предыдущем диалоговом окне."
 
 #: templates/browse.html:50
 msgid "Embed file"
@@ -35,12 +42,12 @@ msgid "Pause Slideshow"
 msgstr "Приостановить слайд-шоу"
 
 #: templates/browse.html:120
-msgid "&lsaquo; Previous Photo"
+msgid "&lsaquo; Previous File"
 msgstr "&lsaquo; Предыдущий файл"
 
 #: templates/browse.html:121
-msgid "Next Photo &rsaquo;"
-msgstr "Следующий файл &rsaquo;"
+msgid "Next File &rsaquo;"
+msgstr "Далее &rsaquo;"
 
 #: templates/browse.html:122
 msgid "Next &rsaquo;"
@@ -49,3 +56,6 @@ msgstr "Далее &rsaquo;"
 #: templates/browse.html:123
 msgid "&lsaquo; Prev"
 msgstr "&lsaquo; Назад"
+
+#~ msgid "Next Photo &rsaquo;"
+#~ msgstr "Следующий файл &rsaquo;"
