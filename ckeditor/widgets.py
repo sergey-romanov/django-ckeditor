@@ -33,7 +33,7 @@ DEFAULT_CONFIG = {
         ['Image', 'Flash',  'Table', 'HorizontalRule', 'SpecialChar', 'Iframe', 'File', 'FileButton'],
     ],
     'toolbar': 'Full',
-    'width': 800,
+    'max-width': '100%',
     'height': 600,
     'filebrowserWindowWidth': 800,
     'filebrowserWindowHeight': 600,
